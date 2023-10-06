@@ -11,6 +11,11 @@ export default class World {
       // hook events like clicking buttons to a specific function
       document.querySelector("#btnAddIsland").addEventListener("click", () => {
         this.addIsland();
+        
+      } );
+
+      document.querySelector("#btnSave").addEventListener("click", () => {
+        this.save();
       } );
 
       
@@ -19,10 +24,20 @@ export default class World {
     save() {
       // save array islands to localstorage as string
       // loop over all this.islands and save the names
+
+      try {
+        const islandJSON = JSON.stringify(this.islands);
+        localStorage.setItem("islandsData", islandJSON);
+        console.log("islands saved");
+
+      } catch (error) {
+        console.log("error saving islands");
+      }
     }
   
     load() {
       // load islands from localstorage into array
+
       // loop over the array and addIslands()
     }
   
@@ -55,17 +70,12 @@ export default class World {
         //moveIsland function to move the island 
         this.moveIsland(div);
 
-
-        
-        
-        
-                
-
     }
   
     moveIsland(island) {
       // this might be a good point to animate the islands with JS Animations API
       //new animation for the island to move to the random coordinates
+  
 
       let coords = this.getCoordinates();
       island.animate(
@@ -81,7 +91,7 @@ export default class World {
         );
         
 
-        console.log(island.coords);
+        // console.log(island.coords);
     }
   }
   
