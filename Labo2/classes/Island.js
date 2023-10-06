@@ -26,6 +26,9 @@ export default class Island {
       ];
   
       // return a random name from the array
+      return names[Math.floor(Math.random() * names.length)];
+      console.log(names);
+
     }
   }
   
