@@ -44,12 +44,18 @@ export default class World {
         let name = new Island();
         div.innerHTML = name.getRandomName();
 
-        
-        // div.innerHTML = island.getRandomName();
-        //div.style.backgroundColor = island.getRandomColor();
+        //add random color to div
+        let color = new Island();
+        div.style.backgroundColor = color.getRandomColor();
 
-        // document.querySelector("#app").appendChild(div);
+        //add random coordinates to div form function getCoordinates
         document.body.appendChild(div);
+        // let coordinates = this.getCoordinates();
+        
+        //moveIsland function to move the island 
+        this.moveIsland(div);
+
+
         
         
         
@@ -59,6 +65,23 @@ export default class World {
   
     moveIsland(island) {
       // this might be a good point to animate the islands with JS Animations API
+      //new animation for the island to move to the random coordinates
+
+      let coords = this.getCoordinates();
+      island.animate(
+        [
+          { transform: `translate(0px, 0px)` },
+          { transform: `translate(${coords.x}px, ${coords.y}px) `}
+        ],
+        {
+          duration: 1000,
+          iterations: 1,
+          fill: "forwards",
+        }
+        );
+        
+
+        console.log(island.coords);
     }
   }
   
