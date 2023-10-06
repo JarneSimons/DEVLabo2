@@ -36,6 +36,22 @@ export default class World {
     }
   
     addIsland(island) {
+        let div = document.createElement("div");
+        //add classlist to div
+        div.classList.add("island");
+
+        //add random name to div
+        let name = new Island();
+        div.innerHTML = name.getRandomName();
+
+        
+        // div.innerHTML = island.getRandomName();
+        //div.style.backgroundColor = island.getRandomColor();
+
+        // document.querySelector("#app").appendChild(div);
+        document.body.appendChild(div);
+        
+        
         
                 
 
