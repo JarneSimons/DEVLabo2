@@ -18,6 +18,10 @@ export default class World {
         this.save();
       } );
 
+      document.querySelector("#btnLoad").addEventListener("click", () => {
+        this.load();
+      } );
+
       
     }
   
@@ -25,20 +29,47 @@ export default class World {
       // save array islands to localstorage as string
       // loop over all this.islands and save the names
 
-      try {
-        const islandJSON = JSON.stringify(this.islands);
-        localStorage.setItem("islandsData", islandJSON);
-        console.log("islands saved");
+      localStorage.setItem('islands', JSON.stringify(this.islands));
+      console.log(localStorage.getItem('islands'));
 
-      } catch (error) {
-        console.log("error saving islands");
-      }
     }
   
     load() {
       // load islands from localstorage into array
 
+      try {
+        // Retrieve the JSON string from localStorage
+        const islandsJSON = localStorage.getItem('islandsData');
+    
+        if (islandsJSON !== null) {
+          // Parse the JSON string to an array
+          const savedIslands = JSON.parse(islandsJSON);
+    
+          // Clear the current this.islands array (if needed)
+          this.islands.length = 0;
+    
+          // Add the saved islands to this.islands
+          savedIslands.forEach(savedIsland => {
+            // Create a new Island instance and add it to this.islands
+            const newIsland = new Island();
+            newIsland.setName(savedIsland.name); // Assuming your Island class has a setName method
+            this.islands.push(newIsland);
+            console.log(newIsland);
+          });
+    
+          console.log('Islands data loaded from localStorage.');
+          
+        } else {
+          console.log('No islands data found in localStorage.');
+        }
+      } catch (error) {
+        console.error('Error while loading islands data:', error);
+      }
+
+
       // loop over the array and addIslands()
+      
+      
     }
   
     getCoordinates() {
@@ -50,7 +81,7 @@ export default class World {
       };
     }
   
-    addIsland(island) {
+    addIsland() {
         let div = document.createElement("div");
         //add classlist to div
         div.classList.add("island");
@@ -60,8 +91,8 @@ export default class World {
         div.innerHTML = name.getRandomName();
 
         //add random color to div
-        let color = new Island();
-        div.style.backgroundColor = color.getRandomColor();
+        let island = new Island();
+        div.style.backgroundColor = island.getRandomColor();
 
         //add random coordinates to div form function getCoordinates
         document.body.appendChild(div);
@@ -69,6 +100,9 @@ export default class World {
         
         //moveIsland function to move the island 
         this.moveIsland(div);
+        
+        
+        this.islands.push(island.getRandomColor(), island.getRandomName());
 
     }
   
