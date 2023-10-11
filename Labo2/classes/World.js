@@ -31,41 +31,28 @@ export default class World {
 
       localStorage.setItem('islands', JSON.stringify(this.islands));
       console.log(localStorage.getItem('islands'));
+      
+
 
     }
   
     load() {
-      // load islands from localstorage into array
 
-      try {
-        // Retrieve the JSON string from localStorage
-        const islandsJSON = localStorage.getItem('islandsData');
-    
-        if (islandsJSON !== null) {
-          // Parse the JSON string to an array
-          const savedIslands = JSON.parse(islandsJSON);
-    
-          // Clear the current this.islands array (if needed)
-          this.islands.length = 0;
-    
-          // Add the saved islands to this.islands
-          savedIslands.forEach(savedIsland => {
-            // Create a new Island instance and add it to this.islands
-            const newIsland = new Island();
-            newIsland.setName(savedIsland.name); // Assuming your Island class has a setName method
-            this.islands.push(newIsland);
-            console.log(newIsland);
-          });
-    
-          console.log('Islands data loaded from localStorage.');
-          
-        } else {
-          console.log('No islands data found in localStorage.');
-        }
-      } catch (error) {
-        console.error('Error while loading islands data:', error);
-      }
+      // Clear all islands from the DOM
+      document.querySelectorAll('.island').forEach(e => e.remove());  
 
+  
+
+    // Load islands from local storage into array
+    let islands = JSON.parse(localStorage.getItem('islands'));
+    console.log(islands);
+
+    // Loop over the array and addIslands()
+    
+
+  
+
+  
 
       // loop over the array and addIslands()
       
@@ -89,6 +76,11 @@ export default class World {
         //add random name to div
         let name = new Island();
         div.innerHTML = name.getRandomName();
+          // now print the name that you just generated
+          // to the console
+          
+        
+          
 
         //add random color to div
         let island = new Island();
@@ -98,12 +90,16 @@ export default class World {
         document.body.appendChild(div);
         // let coordinates = this.getCoordinates();
         
+        
         //moveIsland function to move the island 
         this.moveIsland(div);
         
         
-        this.islands.push(island.getRandomColor(), island.getRandomName());
-
+        // this.islands.push(island.getRandomColor(), island.getRandomName());
+        this.islands.push(div.style.backgroundColor, div.innerHTML);
+        // console.log(this.islands);
+        
+        
     }
   
     moveIsland(island) {
