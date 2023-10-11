@@ -38,25 +38,36 @@ export default class World {
   
     load() {
 
-      // Clear all islands from the DOM
-      document.querySelectorAll('.island').forEach(e => e.remove());  
+     // Clear all islands from the DOM
+      let weg = document.querySelectorAll(".island");
+      weg.forEach(island => {
+      island.remove();
+      });
 
-  
+      // Load islands from local storage into array
+      let islandsData = JSON.parse(localStorage.getItem('islands'));
 
-    // Load islands from local storage into array
-    let islands = JSON.parse(localStorage.getItem('islands'));
-    console.log(islands);
+      if (islandsData) {
+        islandsData.forEach(islandData => {
+        this.addIslandWithData(islandData);
+      });
+      }
 
-    // Loop over the array and addIslands()
+      console.log(islandsData);
+    }
+
+    // Add a new method to add islands using the data
+    addIslandWithData(data) {
+    let div = document.createElement("div");
     
-
-  
-
-  
-
-      // loop over the array and addIslands()
-      
-      
+    div.classList.add("island");
+    div.innerHTML = data.name;
+    div.style.backgroundColor = data.color;
+    document.body.appendChild(div);
+    this.moveIsland(div);
+    this.islands.push(data);
+              
+        
     }
   
     getCoordinates() {
@@ -68,7 +79,7 @@ export default class World {
       };
     }
   
-    addIsland() {
+    addIsland(islands) {
         let div = document.createElement("div");
         //add classlist to div
         div.classList.add("island");
@@ -76,10 +87,6 @@ export default class World {
         //add random name to div
         let name = new Island();
         div.innerHTML = name.getRandomName();
-          // now print the name that you just generated
-          // to the console
-          
-        
           
 
         //add random color to div
@@ -96,7 +103,7 @@ export default class World {
         
         
         // this.islands.push(island.getRandomColor(), island.getRandomName());
-        this.islands.push(div.style.backgroundColor, div.innerHTML);
+        this.islands.push({color: div.style.backgroundColor, name: div.innerHTML});
         // console.log(this.islands);
         
         
